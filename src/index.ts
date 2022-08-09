@@ -7,6 +7,7 @@ import { MockStorage } from './MockStorage'
 import { PersistOptions } from './PersistOptions'
 import SimplePromiseQueue from './SimplePromiseQueue'
 import { merge, MergeOptionType } from './utils'
+import {parse, stringify, toJSON, fromJSON} from 'flatted'
 
 let FlattedJSON = JSON
 
@@ -54,7 +55,7 @@ export class VuexPersistence<S> implements PersistOptions<S> {
     this.subscribed = false
     this.supportCircular = options.supportCircular || false
     if (this.supportCircular) {
-      FlattedJSON = require('flatted')
+      // FlattedJSON = require('flatted')
     }
     this.mergeOption = options.mergeOption || 'replaceArrays'
 
@@ -136,7 +137,7 @@ export class VuexPersistence<S> implements PersistOptions<S> {
                 typeof value === 'string' // If string, parse, or else, just return
                   ? (
                     this.supportCircular
-                      ? FlattedJSON.parse(value || '{}')
+                      ? parse(value || '{}')
                       : JSON.parse(value || '{}')
                   )
                   : (value || {})
@@ -160,7 +161,7 @@ export class VuexPersistence<S> implements PersistOptions<S> {
                 ? merge({}, state || {}, this.mergeOption)
                 : (
                   this.supportCircular
-                    ? FlattedJSON.stringify(state) as any
+                    ? stringify(state) as any
                     : JSON.stringify(state) as any
                 )
               )
@@ -216,7 +217,7 @@ export class VuexPersistence<S> implements PersistOptions<S> {
             if (typeof value === 'string') {// If string, parse, or else, just return
               return (
                 this.supportCircular
-                  ? FlattedJSON.parse(value || '{}')
+                  ? parse(value || '{}')
                   : JSON.parse(value || '{}')
               )
             } else {
@@ -238,7 +239,7 @@ export class VuexPersistence<S> implements PersistOptions<S> {
               key, // Second argument is state _object_ if localforage, stringified otherwise
               (
                 this.supportCircular
-                  ? FlattedJSON.stringify(state) as any
+                  ? stringify(state) as any
                   : JSON.stringify(state) as any
               )
             )
