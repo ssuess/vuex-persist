@@ -7,7 +7,7 @@ import { MockStorage } from './MockStorage'
 import { PersistOptions } from './PersistOptions'
 import SimplePromiseQueue from './SimplePromiseQueue'
 import { merge, MergeOptionType } from './utils'
-import {parse, stringify, toJSON, fromJSON} from 'flatted'
+import {parse, stringify} from 'flatted'
 
 let FlattedJSON = JSON
 
