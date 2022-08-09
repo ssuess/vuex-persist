@@ -47,5 +47,3 @@ typings/
 .env
 /.idea
 \.rpt2_cache/
-
-dist
